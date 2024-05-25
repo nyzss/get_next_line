@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 19:23:30 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:23:18 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,35 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+void	*ft_calloc(size_t n, size_t size)
+{
+	void			*allocated;
+	size_t			i;
+	unsigned char	*location;
+
+	i = 0;
+	if (n == 0 || size == 0)
+	{
+		allocated = malloc(0);
+		if (!allocated)
+			return (NULL);
+		return (allocated);
+	}
+	else if (n * size < size || n * size < n)
+		return (NULL);
+	allocated = (void *)malloc(n * size);
+	if (!allocated)
+		return (NULL);
+	location = (unsigned char *)allocated;
+	while (i < (n * size))
+	{
+		location[i] = 0;
+		i++;
+	}
+	return (allocated);
+}
+
+char	*ft_strjoin(char *buf, char *tmp)
 {
 	int		i;
 	int		j;
@@ -69,21 +97,19 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	new = (char *)malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(tmp) + 1));
 	if (!new)
 		return (NULL);
-	while (s1[i])
+	while (buf[i])
 	{
-		new[i] = s1[i];
+		new[i] = buf[i];
 		i++;
 	}
-	while (s2[j])
+	while (tmp[j])
 	{
-		new[i + j] = s2[j];
+		new[i + j] = tmp[j];
 		j++;
 	}
 	new[i + j] = '\0';
-	free(s1);
-	free(s2);
 	return (new);
 }

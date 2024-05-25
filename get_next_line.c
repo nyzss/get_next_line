@@ -12,27 +12,12 @@
 
 #include "get_next_line.h"
 
-// char	*handle_next_line_old(int fd, char *buf, int *start)
-// {
-// 	char	*result;
-
-// 	if (*start == 0)
-// 	{
-// 		if (!read(fd, buf, BUFFER_SIZE))
-// 			return (NULL);
-// 	}
-// 	result = ft_substr(buf, *start, get_nl(buf));
-// 	*start += get_nl(buf) + 1;
-// 	return (result);
-// }
-
-
-// tmp = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
-int	handle_read_fail(char* tmp, int b_read)
+int	handle_read_fail(char *buf, char* tmp, int b_read)
 {
 	if (b_read < 0)
 	{
 		free(tmp);
+		free(buf);
 		return (1);
 	}
 	return (0);
@@ -45,17 +30,14 @@ char	*handle_read(int fd, char *buf)
 
 	b_read = 1;
 	if (!buf)
-	{
-		buf = (char *)malloc(1);
-		buf[0] = 0;
-	}
+		buf = (char *)calloc(1, 1);
+	tmp = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!tmp || !buf)
+		return (NULL);
 	while (b_read > 0)
 	{
-		tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!tmp)
-			return (NULL);
 		b_read = read(fd, tmp, BUFFER_SIZE);
-		if (handle_read_fail(tmp, b_read))
+		if (handle_read_fail(buf, tmp, b_read))
 			return (NULL);
 		tmp[b_read] = '\0';
 		buf = ft_strjoin(buf, tmp);
@@ -64,6 +46,7 @@ char	*handle_read(int fd, char *buf)
 		if (get_nl(buf))
 			break ;
 	}
+	free(tmp);
 	return (buf);
 }
 
@@ -74,7 +57,7 @@ char	*handle_next_line(char *buf, int *start)
 
 	nl_index = get_nl(&buf[*start]);
 	nl = ft_substr(buf, *start, nl_index);
-	if (!nl)
+	if (!nl || (*start + nl_index == *start))
 		return (NULL);
 	*start += nl_index;
 	return (nl);
@@ -83,7 +66,7 @@ char	*handle_next_line(char *buf, int *start)
 char	*get_next_line(int fd)
 {
 	static char	*buf;
-	char		*next_line;
+	static char	*next_line;
 	static int	start;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0))

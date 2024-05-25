@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:41 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 19:23:52 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:23:27 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 
 //REMOVE
+// # define BUFFER_SIZE 1000000
 # include <stdio.h>
 //REMOVE
 
@@ -28,11 +29,14 @@ char	*get_next_line(int fd);
 
 char	*handle_read(int fd, char *buf);
 
+
 char	*handle_next_line(char *buf, int *start);
 
 size_t	ft_strlen(const char *str);
 
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *buf, char *tmp);
+
+void	*ft_calloc(size_t n, size_t size);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
