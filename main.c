@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 12:44:33 by okoca            ###   ########.fr       */
+/*   Created: 2024/05/25 11:13:24 by okoca             #+#    #+#             */
+/*   Updated: 2024/05/25 12:53:16 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "fcntl.h"
+#include "stdio.h"
 
-char	*get_next_line(int fd)
+int main()
 {
+	int	fd = open("text.txt", O_RDONLY);
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0))
-		return (NULL);
-	return (handle_next_line(fd));
+	printf("line: %s", get_next_line(fd));
 }
