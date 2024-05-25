@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:41 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 20:23:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:41:36 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 char	*get_next_line(int fd);
 
 char	*handle_read(int fd, char *buf);
-
 
 char	*handle_next_line(char *buf, int *start);
 

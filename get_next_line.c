@@ -6,13 +6,13 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 19:00:57y okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:42:24 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	handle_read_fail(char *buf, char* tmp, int b_read)
+int	handle_read_fail(char *buf, char *tmp, int b_read)
 {
 	if (b_read < 0)
 	{

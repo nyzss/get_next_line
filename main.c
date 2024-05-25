@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:13:24 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 20:06:19 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:43:05 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include "fcntl.h"
 #include "stdio.h"
 
-int main()
+// printf("\nline: %s\n", get_next_line(fd));
+// printf("\nline: %s\n", get_next_line(fd));
+// printf("\nline: %s\n", get_next_line(fd));
+int	main(void)
 {
-	int	fd = open("text.txt", O_RDONLY);
+	int	fd;
 
+	fd = open("text.txt", O_RDONLY);
 	printf("line: %s", get_next_line(fd));
-	// printf("\nline: %s\n", get_next_line(fd));
-	// printf("\nline: %s\n", get_next_line(fd));
-	// printf("\nline: %s\n", get_next_line(fd));
 }
