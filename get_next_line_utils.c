@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 16:58:58 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 18:30:09 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,47 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 }
 
 //return i + 1 so that I can include the '\n' char
-size_t	get_nl(char *buf)
+size_t	get_nl(char *buf, int start)
 {
-	int	i;
+	while (buf[start])
+	{
+		if (buf[start] == '\n')
+			return (start + 1);
+		start++;
+	}
+	return (0);
+}
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
 
 	i = 0;
-	while (buf[i] != '\n')
+	while (str[i])
 		i++;
-	return (i + 1);
+	return (i);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!new)
+		return (NULL);
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		new[i + j] = s2[j];
+		j++;
+	}
+	new[i + j] = '\0';
+	return (new);
+}
