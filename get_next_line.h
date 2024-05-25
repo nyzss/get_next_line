@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:41 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 12:47:04 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 16:57:53 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+//REMOVE
+#include <stdio.h>
+//REMOVE
+
 char	*get_next_line(int fd);
 
-char	*handle_next_line(int fd);
+
+char	*handle_next_line(int fd, char *buf, int *start);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 

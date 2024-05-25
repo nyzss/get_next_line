@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:13:24 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 12:53:16 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 16:42:05 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ int main()
 {
 	int	fd = open("text.txt", O_RDONLY);
 
+	printf("line: %s", get_next_line(fd));
 	printf("line: %s", get_next_line(fd));
 }

@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 12:46:49 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 16:58:58 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
+//return i + 1 so that I can include the '\n' char
 size_t	get_nl(char *buf)
 {
 	int	i;
@@ -44,16 +45,6 @@ size_t	get_nl(char *buf)
 	i = 0;
 	while (buf[i] != '\n')
 		i++;
-	return (i);
+	return (i + 1);
 }
 
-char	*handle_next_line(int fd)
-{
-	static char	*buf;
-
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf)
-		return (NULL);
-	read(fd, buf, BUFFER_SIZE);
-	return (ft_substr(buf, 0, get_nl(buf)));
-}
