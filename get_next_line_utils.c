@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 18:30:09 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/25 19:23:30 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,20 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
-//return i + 1 so that I can include the '\n' char
-size_t	get_nl(char *buf, int start)
+int	get_nl(char *buf)
 {
-	while (buf[start])
+	int	i;
+
+	i = 0;
+	while (buf[i])
 	{
-		if (buf[start] == '\n')
-			return (start + 1);
-		start++;
+		if (buf[i] == '\n')
+			return (i + 1);
+		i++;
 	}
 	return (0);
 }
+
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
@@ -58,7 +61,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -80,5 +83,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	new[i + j] = '\0';
+	free(s1);
+	free(s2);
 	return (new);
 }

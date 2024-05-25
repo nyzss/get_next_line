@@ -1,4 +1,4 @@
-wowzies hello guyts!!
-this is the next line
-this is the line after the next line
-reach this yet?
+wowzies hello guyts!!|
+this is the next line|
+another line, are you seeing this|
+reach this yet?|
