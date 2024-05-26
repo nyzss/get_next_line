@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/26 16:16:22 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/26 16:26:42 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_read_fail(char *buf, char *tmp, int b_read)
 	return (0);
 }
 
-char	*handle_read(int fd, char *buf)
+char	*handle_read(int fd, char *buf, int start)
 {
 	char	*tmp;
 	int		b_read;
@@ -43,7 +43,7 @@ char	*handle_read(int fd, char *buf)
 		buf = ft_strjoin(buf, tmp);
 		if (!buf)
 			return (NULL);
-		if (get_nl(buf))
+		if (get_nl(&buf[start]))
 			break ;
 	}
 	free(tmp);
@@ -57,7 +57,6 @@ char	*handle_next_line(char *buf, int *start)
 
 	nl_index = get_nl(&buf[*start]);
 	nl = ft_substr(buf, *start, nl_index);
-	// free(buf);
 	if (!nl || (*start + nl_index == *start))
 	{
 		return (NULL);
@@ -74,7 +73,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0))
 		return (NULL);
-	buf = handle_read(fd, buf);
+	buf = handle_read(fd, buf, start);
 	if (!buf || ft_strlen(buf) == 0)
 		return (NULL);
 	if (next_line)

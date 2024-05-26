@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:41 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/26 16:06:28 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/26 16:27:48 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 100
 # endif
 
 # include <unistd.h>
@@ -27,7 +27,7 @@
 
 char	*get_next_line(int fd);
 
-char	*handle_read(int fd, char *buf);
+char	*handle_read(int fd, char *buf, int start);
 
 char	*handle_next_line(char *buf, int *start);
 
