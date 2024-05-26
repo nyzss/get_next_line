@@ -6,13 +6,13 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 20:23:18 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/26 16:09:01 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*new_str;
 	size_t	i;
@@ -111,5 +111,6 @@ char	*ft_strjoin(char *buf, char *tmp)
 		j++;
 	}
 	new[i + j] = '\0';
+	free(buf);
 	return (new);
 }

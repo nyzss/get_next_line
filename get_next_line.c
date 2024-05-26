@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/25 20:42:24 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/26 16:16:22 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ char	*handle_next_line(char *buf, int *start)
 
 	nl_index = get_nl(&buf[*start]);
 	nl = ft_substr(buf, *start, nl_index);
+	// free(buf);
 	if (!nl || (*start + nl_index == *start))
+	{
 		return (NULL);
+	}
 	*start += nl_index;
 	return (nl);
 }
@@ -74,6 +77,8 @@ char	*get_next_line(int fd)
 	buf = handle_read(fd, buf);
 	if (!buf || ft_strlen(buf) == 0)
 		return (NULL);
+	if (next_line)
+		free(next_line);
 	next_line = handle_next_line(buf, &start);
 	if (!next_line)
 		return (NULL);
