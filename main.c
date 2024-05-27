@@ -6,35 +6,39 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 11:13:24 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/26 16:32:29 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/27 08:36:24 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "fcntl.h"
-#include "stdio.h"
+#include "string.h"
 
 // printf("\nline: %s\n", get_next_line(fd));
 // printf("\nline: %s\n", get_next_line(fd));
 // printf("\nline: %s\n", get_next_line(fd));
-int	main(void)
+int	main(int argc, char **argv)
 {
 	int	fd;
 	char	*buf;
+	char	*file_name;
 
 
-	fd = open("text.txt", O_RDONLY);
+	if (argc == 2)
+		file_name = argv[1];
+	else
+		file_name = strdup("text.txt");
+	fd = open(file_name, O_RDONLY);
 	buf = get_next_line(fd);
 	printf("line: %s", buf);
 
-	buf = get_next_line(fd);
-	printf("line: %s", buf);
+	// buf = get_next_line(fd);
+	// printf("line: %s", buf);
 
-	buf = get_next_line(fd);
-	printf("line: %s", buf);
+	// buf = get_next_line(fd);
+	// printf("line: %s", buf);
 
-	buf = get_next_line(fd);
-	printf("line: %s", buf);
-	// (void)buf;
+	// buf = get_next_line(fd);
+	// printf("line: %s", buf);
 	free(buf);
 }
