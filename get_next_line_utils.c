@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/27 08:04:02 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/27 15:15:36 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ int	get_nl(char *buf)
 	return (0);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
@@ -89,7 +89,7 @@ void	*ft_calloc(size_t n, size_t size)
 	return (allocated);
 }
 
-char	*ft_strjoin(char *buf, char *tmp)
+char	*ft_strjoin(char *old, char *tmp)
 {
 	int		i;
 	int		j;
@@ -97,20 +97,20 @@ char	*ft_strjoin(char *buf, char *tmp)
 
 	i = 0;
 	j = 0;
-	new = (char *)malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(tmp) + 1));
+	new = (char *)malloc(sizeof(char) * (ft_strlen(old) + ft_strlen(tmp) + 1));
 	if (!new)
 		return (NULL);
-	while (buf[i])
+	while (old && old[i])
 	{
-		new[i] = buf[i];
+		new[i] = old[i];
 		i++;
 	}
-	while (tmp[j])
+	while (tmp && tmp[j])
 	{
 		new[i + j] = tmp[j];
 		j++;
 	}
 	new[i + j] = '\0';
-	free(buf);
+	free(old);
 	return (new);
 }

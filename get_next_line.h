@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:41 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/26 16:27:48 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/27 15:12:33 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char	*get_next_line(int fd);
 
 char	*handle_read(int fd, char *buf, int start);
 
-char	*handle_next_line(char *buf, int *start);
+char	*handle_next_line(char *old_string, int *start);
 
-size_t	ft_strlen(const char *str);
+size_t	ft_strlen(char *str);
 
 char	*ft_strjoin(char *buf, char *tmp);
 
