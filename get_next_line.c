@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/28 10:56:59 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/28 11:55:42 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*handle_next_line(char *old_string)
 	int		nl_index;
 
 	nl_index = get_nl(old_string);
+	if (nl_index == 0)
+		nl_index = ft_strlen(old_string);
 	nl = ft_substr(old_string, 0, nl_index);
 	if (!nl)
 		return (NULL);
@@ -73,6 +75,8 @@ char	*free_prev(char *buffer)
 		return (NULL);
 	i = 0;
 	start = get_nl(buffer);
+	if (start == 0)
+		start = ft_strlen(buffer);
 	len = ft_strlen(&buffer[start]);
 	new_buf = (char *)calloc(sizeof(char), len + 1);
 	if (!new_buf)
@@ -84,14 +88,13 @@ char	*free_prev(char *buffer)
 	}
 	free(buffer);
 	new_buf[i] = '\0';
-	// printf("\n\n\n\nstring: %s\n\n\n\n", new_buf);
 	return (new_buf);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*old_string;
-	char	*next_line;
+	char		*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -100,7 +103,46 @@ char	*get_next_line(int fd)
 		return (NULL);
 	next_line = handle_next_line(old_string);
 	old_string = free_prev(old_string);
-	// if (!next_line)
-	// 	free(old_string);
 	return (next_line);
 }
+
+// #include "fcntl.h"
+// #include "string.h"
+
+// // printf("\nline: %s\n", get_next_line(fd));
+// int	main(int argc, char **argv)
+// {
+// 	int	fd;
+// 	char	*buf;
+// 	char	*file_name = "text.txt";
+
+// 	if (argc == 2)
+// 		file_name = argv[1];
+// 	fd = open(file_name, O_RDONLY);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	buf = get_next_line(fd);
+// 	printf("line: %s", buf);
+// 	free(buf);
+
+// 	close(fd);
+// }
