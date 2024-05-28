@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/27 16:04:54 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/28 10:56:59 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_read_fail(char *old_string, char *new_str, int b_read)
 	return (0);
 }
 
-char	*handle_read(int fd, char *old_string, int start)
+char	*handle_read(int fd, char *old_string)
 {
 	char	*new_str;
 	int		b_read;
@@ -43,43 +43,64 @@ char	*handle_read(int fd, char *old_string, int start)
 		old_string = ft_strjoin(old_string, new_str);
 		if (!old_string)
 			return (NULL);
-		if (get_nl(&old_string[start]))
+		if (get_nl(old_string))
 			break ;
 	}
 	free(new_str);
 	return (old_string);
 }
 
-char	*handle_next_line(char *old_string, int *start)
+char	*handle_next_line(char *old_string)
 {
 	char	*nl;
 	int		nl_index;
 
-	nl_index = get_nl(&old_string[*start]);
-	nl = ft_substr(old_string, *start, nl_index);
-	if (!nl || (*start + nl_index == *start))
-	{
+	nl_index = get_nl(old_string);
+	nl = ft_substr(old_string, 0, nl_index);
+	if (!nl)
 		return (NULL);
-	}
-	*start += nl_index;
 	return (nl);
+}
+
+char	*free_prev(char *buffer)
+{
+	char	*new_buf;
+	int		i;
+	int		len;
+	int		start;
+
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	start = get_nl(buffer);
+	len = ft_strlen(&buffer[start]);
+	new_buf = (char *)calloc(sizeof(char), len + 1);
+	if (!new_buf)
+		return (NULL);
+	while (i < len)
+	{
+		new_buf[i] = buffer[start + i];
+		i++;
+	}
+	free(buffer);
+	new_buf[i] = '\0';
+	// printf("\n\n\n\nstring: %s\n\n\n\n", new_buf);
+	return (new_buf);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*old_string;
-	static char	*next_line;
-	static int	start;
+	char	*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	old_string = handle_read(fd, old_string, start);
+	old_string = handle_read(fd, old_string);
 	if (!old_string || ft_strlen(old_string) == 0)
 		return (NULL);
-	if (next_line)
-		free(next_line);
-	next_line = handle_next_line(old_string, &start);
-	if (!next_line)
-		return (NULL);
+	next_line = handle_next_line(old_string);
+	old_string = free_prev(old_string);
+	// if (!next_line)
+	// 	free(old_string);
 	return (next_line);
 }
