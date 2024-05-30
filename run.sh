@@ -13,3 +13,5 @@ if [[ $2 == d ]]
 	then
 		valgrind --leak-check=full --show-leak-kinds=all -s ./a.out "$file_name"
 fi
+
+rm ./a.out

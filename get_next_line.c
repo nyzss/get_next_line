@@ -5,144 +5,95 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 12:16:07 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/28 11:55:42 by okoca            ###   ########.fr       */
+/*   Created: 2024/05/30 09:20:42 by okoca             #+#    #+#             */
+/*   Updated: 2024/05/30 14:45:58 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	handle_read_fail(char *old_string, char *new_str, int b_read)
+char	*handle_read(int fd, char *buffer, char *next_line)
 {
-	if (b_read < 0 && old_string && new_str)
-	{
-		free(new_str);
-		free(old_string);
-		return (1);
-	}
-	return (0);
-}
-
-char	*handle_read(int fd, char *old_string)
-{
-	char	*new_str;
 	int		b_read;
 
 	b_read = 1;
-	if (!old_string)
-		old_string = (char *)ft_calloc(1, 1);
-	new_str = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!new_str || !old_string)
+	next_line = ft_strjoin(next_line, buffer);
+	if (!next_line)
 		return (NULL);
-	while (b_read > 0)
+	while (b_read > 0 && !get_nl(next_line))
 	{
-		b_read = read(fd, new_str, BUFFER_SIZE);
-		if (handle_read_fail(old_string, new_str, b_read))
+		b_read = read(fd, buffer, BUFFER_SIZE);
+		if (b_read < 0)
 			return (NULL);
-		new_str[b_read] = '\0';
-		old_string = ft_strjoin(old_string, new_str);
-		if (!old_string)
+		buffer[BUFFER_SIZE] = '\0';
+		if (next_line && get_nl(next_line) == 0 && b_read == 0)
+			break ;
+		next_line = ft_strjoin(next_line, buffer);
+		if (!next_line)
 			return (NULL);
-		if (get_nl(old_string))
+		if (get_nl(next_line))
 			break ;
 	}
-	free(new_str);
-	return (old_string);
+	return (next_line);
 }
 
-char	*handle_next_line(char *old_string)
+char	*insert_left(char *buffer)
 {
-	char	*nl;
-	int		nl_index;
-
-	nl_index = get_nl(old_string);
-	if (nl_index == 0)
-		nl_index = ft_strlen(old_string);
-	nl = ft_substr(old_string, 0, nl_index);
-	if (!nl)
-		return (NULL);
-	return (nl);
-}
-
-char	*free_prev(char *buffer)
-{
-	char	*new_buf;
 	int		i;
 	int		len;
-	int		start;
+	int		next_ln;
+	char	*new_str;
 
-	if (!buffer)
-		return (NULL);
 	i = 0;
-	start = get_nl(buffer);
-	if (start == 0)
-		start = ft_strlen(buffer);
-	len = ft_strlen(&buffer[start]);
-	new_buf = (char *)calloc(sizeof(char), len + 1);
-	if (!new_buf)
-		return (NULL);
+	next_ln = get_nl(buffer);
+	if (next_ln == 0)
+		len = ft_strlen(buffer);
+	else
+		len = next_ln;
+	new_str = ft_calloc(sizeof(char), len + 1);
 	while (i < len)
 	{
-		new_buf[i] = buffer[start + i];
+		new_str[i] = buffer[i];
 		i++;
 	}
-	free(buffer);
-	new_buf[i] = '\0';
-	return (new_buf);
+	new_str[i] = '\0';
+	return (new_str);
+}
+
+void	remove_prev_line(char *buffer)
+{
+	int		i;
+	int		len;
+	int		next_nl;
+
+	i = 0;
+	next_nl = get_nl(buffer);
+	if (next_nl == 0)
+		len = ft_strlen(buffer);
+	else
+		len = next_nl;
+	while (i < BUFFER_SIZE)
+	{
+		buffer[i] = buffer[i + len];
+		i++;
+	}
+	buffer[i] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*old_string;
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*next_line;
 
+	next_line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	old_string = handle_read(fd, old_string);
-	if (!old_string || ft_strlen(old_string) == 0)
-		return (NULL);
-	next_line = handle_next_line(old_string);
-	old_string = free_prev(old_string);
+	next_line = handle_read(fd, buffer, next_line);
+	if (ft_strlen(next_line) == 0)
+	{
+		free(next_line);
+		next_line = NULL;
+	}
+	remove_prev_line(buffer);
 	return (next_line);
 }
-
-// #include "fcntl.h"
-// #include "string.h"
-
-// // printf("\nline: %s\n", get_next_line(fd));
-// int	main(int argc, char **argv)
-// {
-// 	int	fd;
-// 	char	*buf;
-// 	char	*file_name = "text.txt";
-
-// 	if (argc == 2)
-// 		file_name = argv[1];
-// 	fd = open(file_name, O_RDONLY);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	buf = get_next_line(fd);
-// 	printf("line: %s", buf);
-// 	free(buf);
-
-// 	close(fd);
-// }
