@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:00:46 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/27 15:15:36 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/30 08:54:25 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,17 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
-int	get_nl(char *buf)
+int	get_nl(char *buf, char *tmp, int error)
 {
 	int	i;
 
 	i = 0;
+	if (error && tmp)
+	{
+		free(buf);
+		free(tmp);
+		return (-1);
+	}
 	while (buf[i])
 	{
 		if (buf[i] == '\n')
