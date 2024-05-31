@@ -6,11 +6,24 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:46:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/31 21:02:03 by okoca            ###   ########.fr       */
+/*   Updated: 2024/05/31 21:33:43 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*handle_read_handle(char *next_line)
+{
+	if (get_nl(next_line))
+		next_line = ft_substr(next_line, 0, get_nl(next_line));
+	else if (!ft_strlen(next_line))
+	{
+		if (next_line)
+			free(next_line);
+		return (NULL);
+	}
+	return (next_line);
+}
 
 char	*handle_read(int fd, char *buffer, char *next_line)
 {
@@ -21,6 +34,11 @@ char	*handle_read(int fd, char *buffer, char *next_line)
 	{
 		b_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[b_read] = '\0';
+		if (b_read < 0)
+		{
+			free(next_line);
+			return (NULL);
+		}
 		next_line = ft_strjoin(next_line, buffer);
 		if (!next_line || ft_strlen(next_line) == 0)
 		{
@@ -29,15 +47,7 @@ char	*handle_read(int fd, char *buffer, char *next_line)
 			return (NULL);
 		}
 	}
-	if (get_nl(next_line))
-		next_line = ft_substr(next_line, 0, get_nl(next_line));
-	else if (!ft_strlen(next_line))
-	{
-		if (next_line)
-			free(next_line);
-		return (NULL);
-	}
-	return (next_line);
+	return (handle_read_handle(next_line));
 }
 
 void	remove_begin(char *buffer)
@@ -75,10 +85,12 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	next_line = move_buf_nl(buffer, &next_line);
 	next_line = handle_read(fd, buffer, next_line);
+	if (!next_line)
+		return (NULL);
 	remove_begin(buffer);
 	return (next_line);
 }
