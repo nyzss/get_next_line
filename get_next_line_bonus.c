@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:46:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/03 09:20:18 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/03 10:14:09 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,3 @@ char	*get_next_line(int fd)
 	remove_begin(buffer[fd]);
 	return (next_line);
 }
-
-// sa rentre dans le function handle_read meme si c'est deja a la fin

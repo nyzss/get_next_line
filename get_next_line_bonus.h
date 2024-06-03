@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:48:29 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/31 21:09:29 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/03 09:52:55 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include "limits.h"
 
 char	*get_next_line(int fd);
 

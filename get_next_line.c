@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:46:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/06/03 09:20:27 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/03 09:33:07 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	int			i;
 
-	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	i = 0;
 	next_line = move_buf_nl(buffer, &next_line);
@@ -104,5 +104,3 @@ char	*get_next_line(int fd)
 	remove_begin(buffer);
 	return (next_line);
 }
-
-// sa rentre dans le function handle_read meme si c'est deja a la fin
