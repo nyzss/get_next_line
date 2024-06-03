@@ -6,7 +6,7 @@
 /*   By: okoca <okoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:46:17 by okoca             #+#    #+#             */
-/*   Updated: 2024/05/31 21:33:55 by okoca            ###   ########.fr       */
+/*   Updated: 2024/06/03 09:20:18 by okoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,23 @@ char	*get_next_line(int fd)
 {
 	static char	buffer[1024][BUFFER_SIZE + 1];
 	char		*next_line;
+	int			i;
 
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
+	i = 0;
 	next_line = move_buf_nl(buffer[fd], &next_line);
 	next_line = handle_read(fd, buffer[fd], next_line);
 	if (!next_line)
+	{
+		while (i < BUFFER_SIZE)
+		{
+			buffer[fd][i] = '\0';
+			i++;
+		}
+		buffer[fd][i] = '\0';
 		return (NULL);
+	}
 	remove_begin(buffer[fd]);
 	return (next_line);
 }
